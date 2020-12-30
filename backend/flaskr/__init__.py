@@ -8,6 +8,16 @@ from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
 
+def paginate_questions(request, selection):
+    page = request.args.get('page', 1, type=int)
+    start = (page - 1) * QUESTIONS_PER_PAGE
+    end = start + QUESTIONS_PER_PAGE
+
+    questions = [question.format() for question in selection]
+    current_questions = questions[start:end]
+
+    return current_questions
+
 def create_app(test_config=None):
   # create and configure the app
   app = Flask(__name__)
@@ -21,37 +31,41 @@ def create_app(test_config=None):
   @TODO: Use the after_request decorator to set Access-Control-Allow
   '''
 
-  '''
-  @TODO: 
-  Create an endpoint to handle GET requests 
-  for all available categories.
-  '''
+
+  
   @app.route('/categories')
   def retrieve_categories():
-    selected_categories = Category.query.order_by(Category.id).all()
-    formatted_categories = {}
-    for category in selected_categories:
-      dict_adding = {str(category.id): str(category.type)}
-      formatted_categories.update(dict_adding)
+      selected_categories = Category.query.order_by(Category.id).all()
+      formatted_categories = {}
+      for category in selected_categories:
+        dict_adding = {str(category.id): str(category.type)}
+        formatted_categories.update(dict_adding)
 
-    return jsonify({
-      'success' : True,
-      'categories' : formatted_categories
-    })
+      return jsonify({
+        'success' : True,
+        'categories' : formatted_categories
+      })
 
+  @app.route('/questions')
+  def retrieve_questions():
+      selected_questions = Question.query.order_by(Question.id).all()
+      paged_questions = paginate_questions(request, selected_questions)
 
-  '''
-  @TODO: 
-  Create an endpoint to handle GET requests for questions, 
-  including pagination (every 10 questions). 
-  This endpoint should return a list of questions, 
-  number of total questions, current category, categories. 
+      selected_categories = Category.query.order_by(Category.id).all()
+      formatted_categories = {}
+      for category in selected_categories:
+          dict_adding = {str(category.id): str(category.type)}
+          formatted_categories.update(dict_adding)
 
-  TEST: At this point, when you start the application
-  you should see questions and categories generated,
-  ten questions per page and pagination at the bottom of the screen for three pages.
-  Clicking on the page numbers should update the questions. 
-  '''
+      return jsonify({
+        'success': True,
+        'questions' : paged_questions,
+        'total_questions': len(Question.query.all()),
+        'categories': formatted_categories,
+        'current_category': None
+      })
+    
+
 
   '''
   @TODO: 
