@@ -1,0 +1,14 @@
+
+파이썬 상위 버전에서 발생할수 있음
+AttributeError: module 'time' has no attribute 'clock'
+
+C:\Users\kpark\Desktop\Udacity\01FSND\projects_again\02_trivia_api\backend\venv\lib\site-packages\sqlalchemy\util\compat.py"
+line331
+
+time.clock -> time.perf_counter
+
+File "C:\Users\kpark\Desktop\Udacity\01FSND\projects_again\02_trivia_api\backend\venv\lib\site-packages\werkzeug\routing.py", line 951, in _compile_builder
+    code = compile(module, "<werkzeug routing>", "exec")
+TypeError: required field "type_ignores" missing from Module
+
+pip3 install --upgrade werkzeug
