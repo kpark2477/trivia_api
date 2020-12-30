@@ -30,8 +30,6 @@ def create_app(test_config=None):
   '''
   @TODO: Use the after_request decorator to set Access-Control-Allow
   '''
-
-
   
   @app.route('/categories')
   def retrieve_categories():
@@ -64,7 +62,27 @@ def create_app(test_config=None):
         'categories': formatted_categories,
         'current_category': None
       })
-    
+  
+  @app.route('/questions/<int:question_id>', methods=['DELETE'])
+  def delete_question(question_id):
+      question = Question.query.filter(Question.id == question_id).one_or_none()
+      if question is None:
+          abort(404)
+
+      try:
+          question.delete()
+          selection = Question.query.order_by(Question.id).all()
+          paged_questions = paginate_questions(request, selection)
+
+          return jsonify({
+            'success': True,
+            'deleted': question_id,
+            'questions': paged_questions,
+            'totalQuestions': len(Question.query.all())
+          })
+
+      except:
+          abort(422)
 
 
   '''
