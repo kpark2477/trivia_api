@@ -134,7 +134,20 @@ def create_app(test_config=None):
       except:
           abort(422)
 
+  @app.route('/categories/<int:category_id>/questions', methods=['GET'])
+  def retrieve_questions_by_category(category_id):
+      selected_questions = Question.query.order_by(Question.id).filter(Question.category == category_id)
+      paged_questions = paginate_questions(request, selected_questions)
 
+      selected_category = Category.query.filter(Category.id == category_id).one_or_none()
+      formatted_categories = selected_category.format()
+
+      return jsonify({
+        'success': True,
+        'questions': paged_questions,
+        'totalQuestions': len(Question.query.all()),
+        'currentCategory': formatted_categories
+      })
 
   '''
   @TODO: 
