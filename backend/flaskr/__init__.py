@@ -168,7 +168,9 @@ def create_app(test_config=None):
             Question.category == quiz_category_id).filter(~Question.id.in_(previous_questions)).all()
 
       if len(questions) == 0:
-          abort(404)
+          return jsonify({
+            'question': None
+          })
 
       try:
           formatted_questions = [question.format() for question in questions]
