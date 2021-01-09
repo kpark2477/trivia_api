@@ -11,7 +11,7 @@ Nodejs 와 Node Package Manager (NPM)가 필요합니다. Node를 download 하�
 #### Installing project dependencies
 
 이 프로젝트는 NPM을 통해 software dependencies를 메니지 합니다. 
-NPM `frontend` directory 에 있는 package.json file을 활용합니다. 
+NPM은 `frontend` directory 에 있는 package.json file을 활용합니다. 
 frontend 폴더에서 terminal을 열고 아래 명령어를 입력해서 dependencies를 install 해주세요:
 
 ```bash

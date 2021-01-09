@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 - [Flask](http://flask.pocoo.org/)  은 python의 backend microservices framework입니다. requests 와 responses를 처리하기 위해 이용됩니다.
 
-- [SQLAlchemy](https://www.sqlalchemy.org/) 은 Python SQL toolkit 이자 ORM 입니다. postgres database를 다룹니다..
+- [SQLAlchemy](https://www.sqlalchemy.org/) 은 Python SQL toolkit 이자 ORM 입니다. postgres database를 다룹니다.
 
 - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) flask의 extention으로 frontend server로 부터의 request를 처리하는데 사용됩니다.
 
